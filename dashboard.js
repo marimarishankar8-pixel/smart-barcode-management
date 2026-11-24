@@ -68,15 +68,18 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
   window.location.href = "index.html";
 });
 
-const buttons = [
-  "deviceBtn",
-  "modeBtn",
-  "scannerBtn",
-  "historyBtn"
-];
+document.getElementById("deviceBtn").addEventListener("click", () => {
+  window.location.href = "devices.html";
+});
 
-buttons.forEach((id) => {
-  document.getElementById(id).addEventListener("click", () => {
-    message.textContent = "This feature will be configured in the next steps.";
-  });
+document.getElementById("modeBtn").addEventListener("click", () => {
+  message.textContent = "Usage Mode feature coming soon.";
+});
+
+document.getElementById("scannerBtn").addEventListener("click", () => {
+  message.textContent = "Scanner Control feature coming soon.";
+});
+
+document.getElementById("historyBtn").addEventListener("click", () => {
+  message.textContent = "Scan History feature coming soon.";
 });
