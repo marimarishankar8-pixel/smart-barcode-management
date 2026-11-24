@@ -3,7 +3,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebas
 
 import {
   getAuth,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
 import {
@@ -12,12 +13,15 @@ import {
   getDoc
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-// Replace these values with your Firebase config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAub-Z5BtQAQ-7XwLv2eKk0dL67t3AAH9g",
+  authDomain: "smart-barcode-management.firebaseapp.com",
+  databaseURL: "https://smart-barcode-management-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "smart-barcode-management",
+  storageBucket: "smart-barcode-management.firebasestorage.app",
+  messagingSenderId: "531495832081",
+  appId: "1:531495832081:web:d46057ff232397f3cfbfb0",
+  measurementId: "G-PQTPZ1ZCWB"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -45,7 +49,7 @@ loginForm.addEventListener("submit", async (event) => {
     );
 
     if (!userDoc.exists()) {
-      await auth.signOut();
+      await signOut(auth);
       message.textContent = "User role not assigned.";
       return;
     }
@@ -55,7 +59,7 @@ loginForm.addEventListener("submit", async (event) => {
     if (role === "admin" || role === "staff") {
       message.textContent = "Login successful! Role: " + role;
     } else {
-      await auth.signOut();
+      await signOut(auth);
       message.textContent = "Invalid user role.";
     }
 
