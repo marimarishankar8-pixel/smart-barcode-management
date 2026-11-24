@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Device Management - Smart Barcode</title>
+  <link rel="stylesheet" href="style.css?v=4">
+</head>
+
+<body class="dashboard-page">
+
+  <div class="dashboard">
+
+    <header class="top-header">
+      <div class="brand">
+        <div class="brand-icon">▦</div>
+        <div>
+          <h1>SMART BARCODE</h1>
+          <span>DEVICE MANAGEMENT</span>
+        </div>
+      </div>
+      <div class="online-status">Device Center</div>
+    </header>
+
+    <section class="welcome-section">
+      <div>
+        <span class="welcome-tag">DEVICE CONTROL</span>
+        <h2>Manage Devices</h2>
+        <p>Add and manage all your barcode scanner boxes.</p>
+      </div>
+      <div class="welcome-icon">▣</div>
+    </section>
+
+    <section class="menu-card">
+      <h3>Add New Device</h3>
+      <p>Register a new barcode scanner box.</p>
+
+      <input id="deviceId" placeholder="Enter Device ID">
+      <input id="deviceName" placeholder="Enter Device Name">
+
+      <select id="deviceLocation">
+        <option value="">Select Location</option>
+        <option value="College">College</option>
+        <option value="Bus">Bus</option>
+        <option value="Laboratory">Laboratory</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <button id="addDeviceBtn">+ Add Device</button>
+
+      <p id="deviceMessage"></p>
+    </section>
+
+    <section class="section-heading" style="margin-top:35px;">
+      <h2>Registered Devices</h2>
+      <p>Your scanner device list will appear here.</p>
+    </section>
+
+    <div id="deviceList"></div>
+
+    <button id="backBtn" class="logout-btn">← Back to Dashboard</button>
+
+  </div>
+
+  <script type="module" src="devices.js?v=1"></script>
+</body>
+</html>
