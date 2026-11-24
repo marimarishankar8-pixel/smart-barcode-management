@@ -73,7 +73,7 @@ document.getElementById("deviceBtn").addEventListener("click", () => {
 });
 
 document.getElementById("modeBtn").addEventListener("click", () => {
-  message.textContent = "Usage Mode feature coming soon.";
+  window.location.href = "mode.html";
 });
 
 document.getElementById("scannerBtn").addEventListener("click", () => {
