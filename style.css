@@ -68,3 +68,110 @@ body {
   margin-top: 15px;
   text-align: center;
 }
+/* ADMIN DASHBOARD */
+
+body.dashboard-page {
+  min-height: 100vh;
+  display: block;
+  padding: 25px;
+  background: linear-gradient(135deg, #071a2e, #123e5c, #087e8b);
+  color: white;
+}
+
+.dashboard {
+  width: 100%;
+  max-width: 1100px;
+  margin: 30px auto;
+}
+
+.dashboard h1 {
+  color: #ffffff;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.dashboard > p {
+  color: #67e8f9;
+  text-align: center;
+  margin-bottom: 35px;
+  font-size: 17px;
+}
+
+.dashboard-menu {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.menu-card {
+  background: #ffffff;
+  color: #102a43;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px #0004;
+}
+
+.menu-card h3 {
+  font-size: 21px;
+  margin-bottom: 12px;
+  color: #075985;
+}
+
+.menu-card p {
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.dashboard button {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  background: #0891b2;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dashboard button:hover {
+  background: #0e7490;
+}
+
+.dashboard .logout-btn {
+  display: block;
+  margin: 30px auto 15px;
+  background: #dc3545;
+  min-width: 130px;
+}
+
+#dashboardMessage {
+  color: #a5f3fc;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* MOBILE DESIGN */
+
+@media (max-width: 600px) {
+  body.dashboard-page {
+    padding: 15px;
+  }
+
+  .dashboard {
+    margin: 20px auto;
+  }
+
+  .dashboard h1 {
+    font-size: 25px;
+  }
+
+  .dashboard-menu {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .menu-card {
+    padding: 22px;
+  }
+}
