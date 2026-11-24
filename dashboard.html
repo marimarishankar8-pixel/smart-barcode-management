@@ -1,48 +1,104 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Barcode Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Smart Barcode Scanner</title>
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
-<body>
+
+<body class="dashboard-page">
 
   <div class="dashboard">
-    <h1>Smart Barcode Management</h1>
-    <p>Admin Dashboard</p>
 
-    <div class="dashboard-menu">
-      <div class="menu-card">
-        <h3>Device Management</h3>
-        <p>Add and manage scanner boxes.</p>
-        <button id="deviceBtn">Manage Devices</button>
+    <header class="top-header">
+      <div class="brand">
+        <div class="brand-icon">▦</div>
+        <div>
+          <h1>SMART BARCODE</h1>
+          <span>SCANNER MANAGEMENT SYSTEM</span>
+        </div>
       </div>
+      <div class="online-status">
+        <span class="status-dot"></span> System Online
+      </div>
+    </header>
 
-      <div class="menu-card">
-        <h3>Usage Mode</h3>
-        <p>Select the purpose of the scanner.</p>
-        <button id="modeBtn">Select Mode</button>
+    <section class="welcome-section">
+      <div>
+        <span class="welcome-tag">CONTROL CENTER</span>
+        <h2>Welcome Back!</h2>
+        <p>Manage your smart barcode scanner devices from one place.</p>
       </div>
+      <div class="welcome-icon">⌁</div>
+    </section>
 
-      <div class="menu-card">
-        <h3>Scanner Control</h3>
-        <p>Start or stop scan processing.</p>
-        <button id="scannerBtn">Scanner Control</button>
-      </div>
-
-      <div class="menu-card">
-        <h3>Scan History</h3>
-        <p>View previous scan records.</p>
-        <button id="historyBtn">View History</button>
-      </div>
+    <div class="role-info">
+      <span>YOUR ACCESS</span>
+      <p>Admin Dashboard</p>
     </div>
 
-    <button id="logoutBtn" class="logout-btn">Logout</button>
+    <section class="section-heading">
+      <div>
+        <h2>Dashboard Overview</h2>
+        <p>Select a feature to continue</p>
+      </div>
+    </section>
+
+    <section class="dashboard-menu">
+
+      <div class="menu-card card-blue">
+        <div class="card-icon">▣</div>
+        <span class="card-number">01</span>
+        <h3>Device Management</h3>
+        <p>Add, configure and manage your scanner boxes.</p>
+        <button id="deviceBtn">Manage Devices →</button>
+      </div>
+
+      <div class="menu-card card-purple">
+        <div class="card-icon">◈</div>
+        <span class="card-number">02</span>
+        <h3>Usage Mode</h3>
+        <p>Choose Student, Bus or Lab scanning mode.</p>
+        <button id="modeBtn">Select Mode →</button>
+      </div>
+
+      <div class="menu-card card-cyan">
+        <div class="card-icon">⌁</div>
+        <span class="card-number">03</span>
+        <h3>Scanner Control</h3>
+        <p>Start or stop barcode scan processing.</p>
+        <button id="scannerBtn">Control Scanner →</button>
+      </div>
+
+      <div class="menu-card card-orange">
+        <div class="card-icon">▤</div>
+        <span class="card-number">04</span>
+        <h3>Scan History</h3>
+        <p>View and manage previous scan records.</p>
+        <button id="historyBtn">View History →</button>
+      </div>
+
+    </section>
+
+    <div class="bottom-section">
+      <div>
+        <span class="status-dot"></span>
+        Smart Barcode System
+      </div>
+      <button id="logoutBtn" class="logout-btn">Logout ↗</button>
+    </div>
+
     <p id="dashboardMessage"></p>
+
+    <footer>
+      SMART BARCODE SCANNER © 2026
+    </footer>
+
   </div>
 
-  <script type="module" src="dashboard.js"></script>
-<body class="dashboard-page">
+  <script type="module" src="dashboard.js?v=3"></script>
+</body>
 </html>
