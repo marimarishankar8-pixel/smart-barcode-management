@@ -11,7 +11,9 @@ import {
   collection,
   getDocs,
   doc,
-  getDoc
+  getDoc,
+  setDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -34,6 +36,8 @@ const deviceStatus = document.getElementById("deviceStatus");
 const modeMessage = document.getElementById("modeMessage");
 
 let selectedDevice = null;
+let currentUser = null;
+let isSaving = false;
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
@@ -60,6 +64,7 @@ onAuthStateChanged(auth, async (user) => {
       return;
     }
 
+    currentUser = user;
     await loadDevices();
 
   } catch (error) {
@@ -88,12 +93,9 @@ async function loadDevices() {
 
     snapshot.forEach((item) => {
       const device = item.data();
-
       const option = document.createElement("option");
 
-      // Use the actual Device ID, for example BOX001
       option.value = device.deviceId;
-
       option.textContent =
         device.deviceName + " (" + device.deviceId + ")";
 
@@ -112,17 +114,19 @@ async function loadDevices() {
 deviceSelect.addEventListener("change", () => {
   selectedDevice = deviceSelect.value;
 
-  const selectedOption =
-    deviceSelect.options[deviceSelect.selectedIndex];
-
   if (!selectedDevice) {
     deviceStatus.textContent =
       "Please select a device.";
     return;
   }
 
+  const selectedOption =
+    deviceSelect.options[deviceSelect.selectedIndex];
+
   deviceStatus.textContent =
     "Selected: " + selectedOption.textContent;
+
+  modeMessage.textContent = "";
 });
 
 document.getElementById("studentModeBtn")
@@ -134,17 +138,43 @@ document.getElementById("busModeBtn")
 document.getElementById("labModeBtn")
   .addEventListener("click", () => selectMode("LAB"));
 
-function selectMode(mode) {
+async function selectMode(mode) {
   if (!selectedDevice) {
     modeMessage.textContent =
       "Please select a scanner device first.";
     return;
   }
 
-  modeMessage.textContent =
-    mode + " MODE selected for device " +
-    selectedDevice +
-    ". Firebase mode saving will be added next.";
+  if (!currentUser || isSaving) {
+    return;
+  }
+
+  isSaving = true;
+  modeMessage.textContent = "Saving mode...";
+
+  try {
+    await setDoc(
+      doc(db, "deviceCommands", selectedDevice),
+      {
+        deviceId: selectedDevice,
+        selectedMode: mode,
+        status: "ACTIVE",
+        updatedBy: currentUser.uid,
+        updatedAt: serverTimestamp()
+      },
+      { merge: true }
+    );
+
+    modeMessage.textContent =
+      mode + " MODE saved successfully for " +
+      selectedDevice + "!";
+
+  } catch (error) {
+    modeMessage.textContent =
+      "Failed to save mode: " + error.message;
+  } finally {
+    isSaving = false;
+  }
 }
 
 document.getElementById("backBtn")
