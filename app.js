@@ -1,5 +1,4 @@
 
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
 
 import {
@@ -32,42 +31,49 @@ const db = getFirestore(app);
 const loginForm = document.getElementById("loginForm");
 const message = document.getElementById("message");
 
-loginForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
+if (!loginForm || !message) {
+  alert("Login form or message element not found!");
+} else {
+  message.textContent = "JavaScript Loaded Successfully";
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  loginForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  message.textContent = "Logging in...";
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
 
-  try {
-    const result = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    message.textContent = "Logging in...";
 
-    const uid = result.user.uid;
-    const userRef = doc(db, "userRoles", uid);
-    const userDoc = await getDoc(userRef);
+    try {
+      const result = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-    if (!userDoc.exists()) {
-      await signOut(auth);
-      message.textContent = "User role not found.";
-      return;
+      const userRef = doc(db, "userRoles", result.user.uid);
+      const userDoc = await getDoc(userRef);
+
+      if (!userDoc.exists()) {
+        await signOut(auth);
+        message.textContent = "User role not found.";
+        return;
+      }
+
+      const role = userDoc.data().role;
+
+      if (role === "admin" || role === "staff") {
+        message.textContent = "Login successful!";
+
+        window.location.replace("dashboard.html");
+      } else {
+        await signOut(auth);
+        message.textContent = "Invalid user role.";
+      }
+
+    } catch (error) {
+      message.textContent = "Login failed: " + error.code;
+      console.error("Login error:", error);
     }
-
-    const role = userDoc.data().role;
-
-    if (role === "admin" || role === "staff") {
-      message.textContent = "Login successful!";
-      window.location.href = "dashboard.html";
-    } else {
-      await signOut(auth);
-      message.textContent = "Invalid user role.";
-    }
-
-  } catch (error) {
-    message.textContent = "Login failed: " + error.message;
-  }
-});
+  });
+}
