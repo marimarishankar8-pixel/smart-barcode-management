@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Barcode Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="dashboard">
+    <h1>Smart Barcode Management</h1>
+    <p>Admin Dashboard</p>
+
+    <div class="dashboard-menu">
+      <div class="menu-card">
+        <h3>Device Management</h3>
+        <p>Add and manage scanner boxes.</p>
+        <button id="deviceBtn">Manage Devices</button>
+      </div>
+
+      <div class="menu-card">
+        <h3>Usage Mode</h3>
+        <p>Select the purpose of the scanner.</p>
+        <button id="modeBtn">Select Mode</button>
+      </div>
+
+      <div class="menu-card">
+        <h3>Scanner Control</h3>
+        <p>Start or stop scan processing.</p>
+        <button id="scannerBtn">Scanner Control</button>
+      </div>
+
+      <div class="menu-card">
+        <h3>Scan History</h3>
+        <p>View previous scan records.</p>
+        <button id="historyBtn">View History</button>
+      </div>
+    </div>
+
+    <button id="logoutBtn" class="logout-btn">Logout</button>
+    <p id="dashboardMessage"></p>
+  </div>
+
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
