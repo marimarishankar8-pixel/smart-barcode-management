@@ -11,6 +11,9 @@ import {
   collection,
   addDoc,
   getDocs,
+  doc,
+  getDoc,
+  deleteDoc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
@@ -37,6 +40,7 @@ const deviceMessage = document.getElementById("deviceMessage");
 const deviceList = document.getElementById("deviceList");
 
 let currentUser = null;
+let isAdmin = false;
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
@@ -45,7 +49,28 @@ onAuthStateChanged(auth, async (user) => {
   }
 
   currentUser = user;
-  await loadDevices();
+
+  try {
+    const roleDoc = await getDoc(doc(db, "userRoles", user.uid));
+
+    if (!roleDoc.exists()) {
+      window.location.replace("index.html");
+      return;
+    }
+
+    const role = roleDoc.data().role;
+
+    if (role !== "admin" && role !== "staff") {
+      window.location.replace("index.html");
+      return;
+    }
+
+    isAdmin = role === "admin";
+    await loadDevices();
+
+  } catch (error) {
+    deviceMessage.textContent = "Error: " + error.message;
+  }
 });
 
 addDeviceBtn.addEventListener("click", async () => {
@@ -117,12 +142,46 @@ async function loadDevices() {
 
       const card = document.createElement("div");
       card.className = "menu-card";
-      card.innerHTML = `
-        <h3>${escapeHTML(device.deviceName)}</h3>
-        <p>Device ID: ${escapeHTML(device.deviceId)}</p>
-        <p>Location: ${escapeHTML(device.location)}</p>
-        <p>Status: ${escapeHTML(device.status)}</p>
-      `;
+
+      const heading = document.createElement("h3");
+      heading.textContent = device.deviceName;
+
+      const id = document.createElement("p");
+      id.textContent = "Device ID: " + device.deviceId;
+
+      const location = document.createElement("p");
+      location.textContent = "Location: " + device.location;
+
+      const status = document.createElement("p");
+      status.textContent = "Status: " + device.status;
+
+      card.append(heading, id, location, status);
+
+      if (isAdmin) {
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete Device";
+        deleteButton.style.background = "#dc2626";
+
+        deleteButton.addEventListener("click", async () => {
+          const confirmed = confirm(
+            "Are you sure you want to delete " + device.deviceId + "?"
+          );
+
+          if (!confirmed) return;
+
+          try {
+            deleteButton.disabled = true;
+            await deleteDoc(doc(db, "devices", item.id));
+            deviceMessage.textContent = "Device deleted successfully!";
+            await loadDevices();
+          } catch (error) {
+            deviceMessage.textContent = "Delete failed: " + error.message;
+            deleteButton.disabled = false;
+          }
+        });
+
+        card.appendChild(deleteButton);
+      }
 
       deviceList.appendChild(card);
     });
@@ -132,12 +191,6 @@ async function loadDevices() {
   }
 }
 
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
-}
+document.getElementById("backBtn").addEventListener("click", () => {
+  window.location.href = "dashboard.html";
+});
