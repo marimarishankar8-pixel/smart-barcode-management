@@ -36,7 +36,6 @@ const modeMessage = document.getElementById("modeMessage");
 let selectedDevice = null;
 
 onAuthStateChanged(auth, async (user) => {
-
   if (!user) {
     window.location.replace("index.html");
     return;
@@ -64,17 +63,16 @@ onAuthStateChanged(auth, async (user) => {
     await loadDevices();
 
   } catch (error) {
-    deviceStatus.textContent = error.message;
+    deviceStatus.textContent =
+      "Error: " + error.message;
   }
 });
 
 async function loadDevices() {
-
   deviceSelect.innerHTML =
     '<option value="">Loading devices...</option>';
 
   try {
-
     const snapshot = await getDocs(
       collection(db, "devices")
     );
@@ -89,45 +87,42 @@ async function loadDevices() {
     }
 
     snapshot.forEach((item) => {
-
       const device = item.data();
 
       const option = document.createElement("option");
 
-      option.value = item.id;
+      // Use the actual Device ID, for example BOX001
+      option.value = device.deviceId;
+
       option.textContent =
         device.deviceName + " (" + device.deviceId + ")";
 
       deviceSelect.appendChild(option);
-
     });
 
     deviceStatus.textContent =
       snapshot.size + " device(s) available.";
 
   } catch (error) {
-
     deviceStatus.textContent =
       "Unable to load devices: " + error.message;
-
   }
 }
 
 deviceSelect.addEventListener("change", () => {
-
   selectedDevice = deviceSelect.value;
 
   const selectedOption =
     deviceSelect.options[deviceSelect.selectedIndex];
 
   if (!selectedDevice) {
-    deviceStatus.textContent = "Please select a device.";
+    deviceStatus.textContent =
+      "Please select a device.";
     return;
   }
 
   deviceStatus.textContent =
     "Selected: " + selectedOption.textContent;
-
 });
 
 document.getElementById("studentModeBtn")
@@ -140,7 +135,6 @@ document.getElementById("labModeBtn")
   .addEventListener("click", () => selectMode("LAB"));
 
 function selectMode(mode) {
-
   if (!selectedDevice) {
     modeMessage.textContent =
       "Please select a scanner device first.";
@@ -148,8 +142,9 @@ function selectMode(mode) {
   }
 
   modeMessage.textContent =
-    mode + " MODE selected for the chosen device. Firebase mode saving will be added next.";
-
+    mode + " MODE selected for device " +
+    selectedDevice +
+    ". Firebase mode saving will be added next.";
 }
 
 document.getElementById("backBtn")
