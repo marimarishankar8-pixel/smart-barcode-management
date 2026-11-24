@@ -44,10 +44,25 @@ loginForm.addEventListener("submit", async (event) => {
       auth, email, password
     );
 
-    const userDoc = await getDoc(
-      doc(db, "userRoles", result.user.uid)
-    );
+    const uid = result.user.uid;
 
+const userRef = doc(db, "userRoles", uid);
+
+const userDoc = await getDoc(userRef);
+
+console.log("Logged-in UID:", uid);
+console.log("Document path:", userRef.path);
+console.log("Document exists:", userDoc.exists());
+
+if (!userDoc.exists()) {
+  message.textContent = "User role not found. UID: " + uid;
+  await signOut(auth);
+  return;
+}
+
+const role = userDoc.data().role;
+
+message.textContent = "Found role: " + role;
     if (!userDoc.exists()) {
       await signOut(auth);
       message.textContent = "User role not assigned.";
