@@ -1,4 +1,5 @@
 
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
 
 import {
@@ -41,43 +42,30 @@ loginForm.addEventListener("submit", async (event) => {
 
   try {
     const result = await signInWithEmailAndPassword(
-      auth, email, password
+      auth,
+      email,
+      password
     );
 
     const uid = result.user.uid;
+    const userRef = doc(db, "userRoles", uid);
+    const userDoc = await getDoc(userRef);
 
-const userRef = doc(db, "userRoles", uid);
-
-const userDoc = await getDoc(userRef);
-
-console.log("Logged-in UID:", uid);
-console.log("Document path:", userRef.path);
-console.log("Document exists:", userDoc.exists());
-
-if (!userDoc.exists()) {
-  message.textContent = "User role not found. UID: " + uid;
-  await signOut(auth);
-  return;
-}
-
-const role = userDoc.data().role;
-
-message.textContent = "Found role: " + role;
     if (!userDoc.exists()) {
       await signOut(auth);
-      message.textContent = "User role not assigned.";
+      message.textContent = "User role not found.";
       return;
     }
 
     const role = userDoc.data().role;
 
     if (role === "admin" || role === "staff") {
-  message.textContent = "Login successful!";
-  window.location.href = "dashboard.html";
-} else {
-  await signOut(auth);
-  message.textContent = "Invalid user role.";
-}
+      message.textContent = "Login successful!";
+      window.location.href = "dashboard.html";
+    } else {
+      await signOut(auth);
+      message.textContent = "Invalid user role.";
+    }
 
   } catch (error) {
     message.textContent = "Login failed: " + error.message;
