@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usage Mode - Smart Barcode</title>
+  <link rel="stylesheet" href="style.css?v=5">
+</head>
+
+<body class="dashboard-page">
+
+  <div class="dashboard">
+
+    <header class="top-header">
+      <div class="brand">
+        <div class="brand-icon">▦</div>
+        <div>
+          <h1>SMART BARCODE</h1>
+          <span>USAGE MODE SELECTION</span>
+        </div>
+      </div>
+      <div class="online-status">Mode Center</div>
+    </header>
+
+    <section class="welcome-section">
+      <div>
+        <span class="welcome-tag">SYSTEM CONFIGURATION</span>
+        <h2>Select Usage Mode</h2>
+        <p>Choose how you want to use your scanner device.</p>
+      </div>
+      <div class="welcome-icon">◈</div>
+    </section>
+
+    <section class="dashboard-menu">
+
+      <div class="menu-card card-blue">
+        <div class="card-icon">🎓</div>
+        <span class="card-number">01</span>
+        <h3>Student Mode</h3>
+        <p>Manage student attendance using barcode scanning.</p>
+        <button id="studentModeBtn">Select Student Mode →</button>
+      </div>
+
+      <div class="menu-card card-purple">
+        <div class="card-icon">🚌</div>
+        <span class="card-number">02</span>
+        <h3>Bus Mode</h3>
+        <p>Manage bus boarding and GPS tracking.</p>
+        <button id="busModeBtn">Select Bus Mode →</button>
+      </div>
+
+      <div class="menu-card card-cyan">
+        <div class="card-icon">🔬</div>
+        <span class="card-number">03</span>
+        <h3>Lab Mode</h3>
+        <p>Track laboratory student entry and exit.</p>
+        <button id="labModeBtn">Select Lab Mode →</button>
+      </div>
+
+    </section>
+
+    <p id="modeMessage"></p>
+
+    <button id="backBtn" class="logout-btn">
+      ← Back to Dashboard
+    </button>
+
+    <footer>SMART BARCODE SCANNER © 2026</footer>
+
+  </div>
+
+  <script type="module" src="mode.js?v=1"></script>
+
+</body>
+</html>
