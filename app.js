@@ -72,11 +72,12 @@ message.textContent = "Found role: " + role;
     const role = userDoc.data().role;
 
     if (role === "admin" || role === "staff") {
-      message.textContent = "Login successful! Role: " + role;
-    } else {
-      await signOut(auth);
-      message.textContent = "Invalid user role.";
-    }
+  message.textContent = "Login successful!";
+  window.location.href = "dashboard.html";
+} else {
+  await signOut(auth);
+  message.textContent = "Invalid user role.";
+}
 
   } catch (error) {
     message.textContent = "Login failed: " + error.message;
