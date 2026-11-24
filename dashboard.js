@@ -32,7 +32,7 @@ const message = document.getElementById("dashboardMessage");
 
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
-    window.location.href = "index.html";
+    window.location.replace("index.html");
     return;
   }
 
@@ -41,7 +41,7 @@ onAuthStateChanged(auth, async (user) => {
 
     if (!roleDoc.exists()) {
       await signOut(auth);
-      window.location.href = "index.html";
+      window.location.replace("index.html");
       return;
     }
 
@@ -49,11 +49,11 @@ onAuthStateChanged(auth, async (user) => {
 
     if (role !== "admin" && role !== "staff") {
       await signOut(auth);
-      window.location.href = "index.html";
+      window.location.replace("index.html");
       return;
     }
 
-    document.querySelector(".dashboard > p").textContent =
+    document.querySelector(".role-info p").textContent =
       role.toUpperCase() + " DASHBOARD";
 
     message.textContent = "Welcome! Login verified.";
@@ -65,7 +65,7 @@ onAuthStateChanged(auth, async (user) => {
 
 document.getElementById("logoutBtn").addEventListener("click", async () => {
   await signOut(auth);
-  window.location.href = "index.html";
+  window.location.replace("index.html");
 });
 
 document.getElementById("deviceBtn").addEventListener("click", () => {
